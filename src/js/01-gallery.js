@@ -1,5 +1,8 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
 const galleryElement = document.querySelector('.gallery');
 
 function createGalleryCard({ preview, original, description }) {
@@ -21,41 +24,12 @@ function createListMarkup(items) {
     .join(''));
 }
 
-function onImgClick(event) {
-  event.preventDefault();
-  if (!event.target.classList.contains('gallery__image')) {
-    return;
-  }
-  createLigthBoxView(event.target.dataset.source);
-}
-
-function createLigthBoxView(imageUrl) {
-  const onKeyDown = event => {
-    if (event.code === 'Escape') {
-      instance.close();
-    }
-    console.log(event.key);
-  };
-
-  const instance = basicLightbox.create(
-    `
-    <img src="${imageUrl}" width="800" height="600">
-`,
-    {
-      onShow: instance => {
-        window.addEventListener('keydown', onKeyDown);
-        document.body.classList.add('no-scroll');
-      },
-      onClose: instance => {
-        window.removeEventListener('keydown', onKeyDown);
-        document.body.classList.remove('no-scroll');
-      },
-    }
-  );
-  instance.show();
-}
-
 createListMarkup(galleryItems);
-galleryElement.addEventListener('click', onImgClick);
+
+var lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+});
 
 // console.log(galleryItems);
