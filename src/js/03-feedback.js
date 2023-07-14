@@ -11,9 +11,17 @@ const refs = {
 
 function onFormSubmit(evt) {
   evt.preventDefault();
+  const {
+    elements: { email, message },
+  } = evt.currentTarget;
+  if (email.value === '' || message.value === '') {
+    return alert('Please fill in all the fields!');
+  }
+  console.log({ email: email.value, message: message.value });
+
   evt.currentTarget.reset();
+  formData = {};
   localStorage.removeItem(STORAGE_KEY);
-  // console.log('отправляем форму');
 }
 
 function onFormInput(evt) {
